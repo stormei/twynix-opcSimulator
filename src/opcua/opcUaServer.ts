@@ -13,6 +13,8 @@ import type { SimulationEngine } from "../simulation/simulationEngine.js";
 
 const MINIMUM_SAMPLING_INTERVAL_MS = 1000;
 
+OPCUAServer.requestExactEndpointUrl = false;
+
 export class TwynixOpcUaServer {
   private server?: OPCUAServer;
   private variables = new Map<string, UAVariable>();
@@ -28,7 +30,7 @@ export class TwynixOpcUaServer {
       port: config.opcua.port,
       host: config.opcua.host,
       hostname: endpointHostname(config),
-      advertisedEndpoints: config.opcua.advertisedEndpointUrl,
+      advertisedEndpoints: advertisedEndpoints(config),
       resourcePath: config.opcua.resourcePath,
       allowAnonymous: true,
       securityModes: [MessageSecurityMode.None],
@@ -162,6 +164,19 @@ function endpointHostname(config: SimulatorConfig): string {
     return config.opcua.host;
   }
   return new URL(config.opcua.advertisedEndpointUrl).hostname;
+}
+
+function advertisedEndpoints(config: SimulatorConfig): string[] | undefined {
+  const endpoints = new Set<string>();
+  if (config.opcua.advertisedEndpointUrl) {
+    endpoints.add(config.opcua.advertisedEndpointUrl);
+  }
+
+  if (config.opcua.host === "0.0.0.0") {
+    endpoints.add(`opc.tcp://0.0.0.0:${config.opcua.port}${config.opcua.resourcePath}`);
+  }
+
+  return endpoints.size > 0 ? Array.from(endpoints) : undefined;
 }
 
 function toOpcUaVariantDataType(type: RuntimeTag["dataType"]): DataType {
