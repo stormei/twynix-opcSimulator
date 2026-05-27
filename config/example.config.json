@@ -1,0 +1,18 @@
+{
+  "name": "TwynIX OPC UA Simulator",
+  "seed": 424242,
+  "updateIntervalMs": 1000,
+  "faultMode": false,
+  "opcua": {
+    "port": 4840,
+    "host": "0.0.0.0",
+    "resourcePath": "/twynix/server"
+  },
+  "topology": {
+    "areas": 4,
+    "linesPerArea": 5,
+    "machinesPerLine": 10,
+    "tagsPerMachine": 5,
+    "includeUtilities": true
+  }
+}

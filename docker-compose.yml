@@ -1,0 +1,12 @@
+services:
+  twynix-opcua-simulator:
+    build: .
+    container_name: twynix-opcua-simulator
+    ports:
+      - "3000:3000"
+      - "4840:4840"
+    volumes:
+      - ./config:/app/config
+    environment:
+      NODE_ENV: production
+      TWYNIX_CONFIG_PATH: /app/config/runtime.json
