@@ -71,6 +71,7 @@ export const webHtml = String.raw`<!doctype html>
         <label>Update interval ms<input id="updateIntervalMs" type="number" min="100"></label>
         <label>Seed<input id="seed" type="number"></label>
         <label>OPC UA port<input id="opcPort" type="number" min="1" max="65535"></label>
+        <label>Advertised endpoint<input id="advertisedEndpointUrl" type="text" placeholder="opc.tcp://host:4840/twynix/server"></label>
         <label>Fault mode<select id="faultMode"><option value="false">Disabled</option><option value="true">Enabled</option></select></label>
       </div>
       <div class="actions" style="margin-top:14px">
@@ -117,6 +118,7 @@ export const webHtml = String.raw`<!doctype html>
       $('updateIntervalMs').value = config.updateIntervalMs;
       $('seed').value = config.seed;
       $('opcPort').value = config.opcua.port;
+      $('advertisedEndpointUrl').value = config.opcua.advertisedEndpointUrl || '';
       $('faultMode').value = String(config.faultMode);
     }
 
@@ -153,7 +155,11 @@ export const webHtml = String.raw`<!doctype html>
         updateIntervalMs: Number($('updateIntervalMs').value),
         seed: Number($('seed').value),
         faultMode: $('faultMode').value === 'true',
-        opcua: { ...config.opcua, port: Number($('opcPort').value) },
+        opcua: {
+          ...config.opcua,
+          port: Number($('opcPort').value),
+          advertisedEndpointUrl: $('advertisedEndpointUrl').value.trim() || undefined
+        },
         topology: {
           ...config.topology,
           areas: Number($('areas').value),

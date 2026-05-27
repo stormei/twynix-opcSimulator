@@ -52,7 +52,8 @@ export const simulatorConfigSchema = z.object({
   opcua: z.object({
     port: z.number().int().min(1).max(65535),
     host: z.string().min(1),
-    resourcePath: z.string().min(1)
+    resourcePath: z.string().min(1),
+    advertisedEndpointUrl: z.string().url().startsWith("opc.tcp://").optional()
   }),
   topology: z.object({
     areas: z.number().int().min(1).max(100),

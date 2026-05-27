@@ -8,6 +8,15 @@ import { createWebServer } from "./web/webServer.js";
 
 const configStore = new ConfigStore(resolveConfigPath());
 let config: SimulatorConfig = await configStore.load();
+if (process.env.TWYNIX_OPCUA_ADVERTISED_URL) {
+  config = {
+    ...config,
+    opcua: {
+      ...config.opcua,
+      advertisedEndpointUrl: process.env.TWYNIX_OPCUA_ADVERTISED_URL
+    }
+  };
+}
 
 const engine = new SimulationEngine(config);
 const opcuaServer = new TwynixOpcUaServer(engine);

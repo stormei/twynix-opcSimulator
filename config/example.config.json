@@ -6,7 +6,8 @@
   "opcua": {
     "port": 4840,
     "host": "0.0.0.0",
-    "resourcePath": "/twynix/server"
+    "resourcePath": "/twynix/server",
+    "advertisedEndpointUrl": "opc.tcp://192.168.1.155:4840/twynix/server"
   },
   "topology": {
     "areas": 4,

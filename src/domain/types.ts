@@ -72,6 +72,7 @@ export interface OpcUaConfig {
   port: number;
   host: string;
   resourcePath: string;
+  advertisedEndpointUrl?: string;
 }
 
 export interface SimulatorConfig {

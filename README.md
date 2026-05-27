@@ -28,6 +28,14 @@ opc.tcp://localhost:4840/twynix/server
 
 The server binds OPC UA to `0.0.0.0:4840` by default. Anonymous/no-credential OPC UA client connections are enabled for v1.
 
+For Docker, gateways, or clients on another machine, set the advertised endpoint to the host address the client can reach:
+
+```bash
+TWYNIX_OPCUA_ADVERTISED_URL=opc.tcp://192.168.1.155:4840/twynix/server npm run dev
+```
+
+With Docker Compose, edit `TWYNIX_OPCUA_ADVERTISED_URL` in `docker-compose.yml` to match the Docker host IP.
+
 ## Run With Docker
 
 ```bash

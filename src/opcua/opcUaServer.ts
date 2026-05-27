@@ -26,7 +26,9 @@ export class TwynixOpcUaServer {
 
     this.server = new OPCUAServer({
       port: config.opcua.port,
-      hostname: config.opcua.host,
+      host: config.opcua.host,
+      hostname: endpointHostname(config),
+      advertisedEndpoints: config.opcua.advertisedEndpointUrl,
       resourcePath: config.opcua.resourcePath,
       allowAnonymous: true,
       securityModes: [MessageSecurityMode.None],
@@ -153,6 +155,13 @@ function toOpcUaDataType(type: RuntimeTag["dataType"]): string {
     case "Double":
       return "Double";
   }
+}
+
+function endpointHostname(config: SimulatorConfig): string {
+  if (!config.opcua.advertisedEndpointUrl) {
+    return config.opcua.host;
+  }
+  return new URL(config.opcua.advertisedEndpointUrl).hostname;
 }
 
 function toOpcUaVariantDataType(type: RuntimeTag["dataType"]): DataType {

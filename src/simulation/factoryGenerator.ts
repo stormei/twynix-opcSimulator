@@ -48,7 +48,8 @@ export function defaultConfig(): SimulatorConfig {
     opcua: {
       port: 4840,
       host: "0.0.0.0",
-      resourcePath: "/twynix/server"
+      resourcePath: "/twynix/server",
+      advertisedEndpointUrl: undefined
     },
     topology: {
       areas: 4,
